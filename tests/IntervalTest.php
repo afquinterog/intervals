@@ -31,6 +31,28 @@ final class IntervalTest extends TestCase
         $this->assertIsInt((int) $interval['id']);
     }
 
+     /**
+     * @test
+     */
+    public function an_interval_can_be_deleted() :void
+    {
+        $this->cleanDatabase();
+
+        $interval = new Interval([
+            'date_start' => '2019-06-01',
+            'date_end' => '2019-06-15',
+            'price' => 30
+        ]);
+
+        $interval = $interval->save();
+
+        Interval::delete($interval['id']);
+
+        $data = (new Interval())->all()->order('date_start')->get();
+
+        $this->assertEquals(count($data), 0);
+    }
+
     /**
      * @test
      */
