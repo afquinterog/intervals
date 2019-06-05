@@ -45,9 +45,9 @@ class IntervalsController
     {
         $data = Request::post();
 
-        $interval = new Interval(Request::post());
+        $interval = new Interval($data);
 
-        if ($interval->validate()) {
+        if ($interval->validate() && $data['date_start'] <= $data['date_end']) {
             $interval->save();
             $msg = "msg=Interval saved/updated";
         } else {
